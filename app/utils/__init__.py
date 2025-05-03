@@ -1,2 +1,19 @@
-# Utils package initialization 
-swagger = Swagger(app, template_file=os.path.join(os.path.dirname(__file__), 'swagger.yaml'))
+from flask import Flask
+from flask_swagger_ui import get_swaggerui_blueprint
+import os
+
+app = Flask(__name__)
+
+# Swagger configuration
+SWAGGER_URL = '/api/docs'
+API_URL = '/static/swagger.json'
+
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "Banking API"
+    }
+)
+
+app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
